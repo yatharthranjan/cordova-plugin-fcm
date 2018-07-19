@@ -54,6 +54,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
     // [END receive_message]
 
+
+    @Override
+    public void onMessageSent(String msgId) {
+        super.onMessageSent(msgId);
+        Log.d(TAG, "Message sent +++++++++++++++++: " + msgId);
+    }
+
+    @Override
+    public void onSendError(String msgId, Exception e) {
+        super.onSendError(msgId, e);
+        Log.e(TAG, "Error sending upstream message -----------------: " + e);
+    }
+
     /**
      * Create and show a simple notification containing the received FCM message.
      *

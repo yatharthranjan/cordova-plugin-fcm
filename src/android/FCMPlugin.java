@@ -26,6 +26,9 @@ public class FCMPlugin extends CordovaPlugin {
 	public static String tokenRefreshCallBack = "FCMPlugin.onTokenRefreshReceived";
 	public static Boolean notificationCallBackReady = false;
 	public static Map<String, Object> lastPush = null;
+
+	public static final String FCM_SENDER_ID = "";
+	public static final String
 	 
 	public FCMPlugin() {}
 	
@@ -91,6 +94,33 @@ public class FCMPlugin extends CordovaPlugin {
 						try{
 							FirebaseMessaging.getInstance().unsubscribeFromTopic( args.getString(0) );
 							callbackContext.success();
+						}catch(Exception e){
+							callbackContext.error(e.getMessage());
+						}
+					}
+				});
+			}
+			else if (action.equals("upstream")) {
+				cordova.getThreadPool().execute(new Runnable() {
+					public void run() {
+						try{
+							HashMap<String, String> map = new HashMap<String, String>();
+							JSONObject jObject = args.getJSONObject(0);
+							Iterator<?> keys = jObject.keys();
+
+							while( keys.hasNext() ){
+								String key = (String)keys.next();
+								String value = jObject.getString(key);
+								map.put(key, value);
+							}
+
+							FirebaseMessaging fm = FirebaseMessaging.getInstance();
+							fm.send(new RemoteMessage.Builder("78391781623@gcm.googleapis.com")
+									.setMessageId(map.get("eventId"))
+									.setData(map)
+									.setTtl(900)
+									.build());
+							callbackContext.success("Successfully Sent");
 						}catch(Exception e){
 							callbackContext.error(e.getMessage());
 						}

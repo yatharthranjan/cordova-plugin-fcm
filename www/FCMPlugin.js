@@ -36,6 +36,11 @@ FCMPlugin.prototype.onTokenRefreshReceived = function(token){
 	console.log("Received token refresh")
 	console.log(token)
 }
+
+FCMPlugin.prototype.upstream = function(data, success, error ){
+	exec(success, error, "FCMPlugin", 'upstream', [data]);
+}
+
 // FIRE READY //
 exec(function(result){ console.log("FCMPlugin Ready OK") }, function(result){ console.log("FCMPlugin Ready ERROR") }, "FCMPlugin",'ready',[]);
 
