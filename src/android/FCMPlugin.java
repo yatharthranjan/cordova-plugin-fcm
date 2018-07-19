@@ -27,9 +27,9 @@ public class FCMPlugin extends CordovaPlugin {
 	public static Boolean notificationCallBackReady = false;
 	public static Map<String, Object> lastPush = null;
 
-	public static final String FCM_SENDER_ID = "";
-	public static final String
-	 
+	public static final String FCM_PROJECT_SENDER_ID = "1043784930865";
+	public static final String FCM_SERVER_CONNECTION = "@gcm.googleapis.com";
+
 	public FCMPlugin() {}
 	
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -115,7 +115,7 @@ public class FCMPlugin extends CordovaPlugin {
 							}
 
 							FirebaseMessaging fm = FirebaseMessaging.getInstance();
-							fm.send(new RemoteMessage.Builder("78391781623@gcm.googleapis.com")
+							fm.send(new RemoteMessage.Builder(FCM_PROJECT_SENDER_ID + FCM_SERVER_CONNECTION)
 									.setMessageId(map.get("eventId"))
 									.setData(map)
 									.setTtl(900)
