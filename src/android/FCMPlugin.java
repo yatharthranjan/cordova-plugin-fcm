@@ -9,6 +9,11 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.UUID;
 
 import android.os.Bundle;
 
@@ -101,6 +106,7 @@ public class FCMPlugin extends CordovaPlugin {
 				});
 			}
 			else if (action.equals("upstream")) {
+				Log.d(TAG, "Sending upstream message ...");
 				cordova.getThreadPool().execute(new Runnable() {
 					public void run() {
 						try{
@@ -112,6 +118,8 @@ public class FCMPlugin extends CordovaPlugin {
 								String key = (String)keys.next();
 								String value = jObject.getString(key);
 								map.put(key, value);
+
+								Log.d(TAG, "Key : " + key + ", Value : " + value);
 							}
 
 							FirebaseMessaging fm = FirebaseMessaging.getInstance();

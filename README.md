@@ -57,6 +57,30 @@ FCMPlugin.getToken(function(token){
 });
 ```
 
+#### Set Sender Id
+```javascript
+// To be implemented
+```
+
+
+#### Send Upstream Message
+
+```javascript
+        FCMPlugin.upstream({
+          eventId: uuid(),
+          action: 'SCHEDULE',
+          notificationTitle: 'Hello',
+          notificationMessage: 'Testing',
+          time: new Date().getTime() + 60000 * 1000,
+          subjectId: 'radar',
+          expiry:
+        }, function(succ) {
+          console.log(succ);
+        }, function(err) {
+          console.log(err);
+        });
+```
+
 #### Subscribe to topic
 
 ```javascript
