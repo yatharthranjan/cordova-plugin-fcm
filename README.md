@@ -58,12 +58,22 @@ FCMPlugin.getToken(function(token){
 ```
 
 #### Set Sender Id
+**Added in this fork. Only for android right now**
 ```javascript
-// To be implemented
+//FCMPlugin.getToken( id,  successCallback(), errorCallback(err) );
+
+      FCMPlugin.setSenderId('1043784930865',
+       function() {
+          console.log('Set sender id success');
+      }, function(error) {
+        console.log(error);
+        alert(error)
+      });
 ```
 
 
 #### Send Upstream Message
+**Added in this fork. Only for android right now**
 
 ```javascript
         FCMPlugin.upstream({

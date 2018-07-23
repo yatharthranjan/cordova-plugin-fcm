@@ -37,7 +37,12 @@ FCMPlugin.prototype.onTokenRefreshReceived = function(token){
 	console.log(token)
 }
 
-FCMPlugin.prototype.upstream = function(data, success, error ){
+FCMPlugin.prototype.setSenderId = function( id, success, error ){
+    console.log(id)
+	exec(success, error, "FCMPlugin", 'setSenderId', [id]);
+}
+
+FCMPlugin.prototype.upstream = function( data, success, error ){
     console.log(data)
 	exec(success, error, "FCMPlugin", 'upstream', [data]);
 }

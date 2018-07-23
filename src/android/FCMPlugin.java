@@ -32,7 +32,7 @@ public class FCMPlugin extends CordovaPlugin {
 	public static Boolean notificationCallBackReady = false;
 	public static Map<String, Object> lastPush = null;
 
-	public static final String FCM_PROJECT_SENDER_ID = "1043784930865";
+	public static String FCM_PROJECT_SENDER_ID = null;
 	public static final String FCM_SERVER_CONNECTION = "@gcm.googleapis.com";
 
 	public FCMPlugin() {}
@@ -104,8 +104,24 @@ public class FCMPlugin extends CordovaPlugin {
 						}
 					}
 				});
+			} else if (action.equals("setSenderId")) {
+				Log.d(TAG,"==> Set Sender ID to : "+ args.getString(0));
+				FCM_PROJECT_SENDER_ID = args.getString(0);
+				cordova.getThreadPool().execute(new Runnable() {
+					public void run() {
+						try {
+							args.getString(0);
+							callbackContext.success();
+						} catch (Exception e) {
+							callbackContext.error(e.getMessage());
+						}
+					}
+				});
 			}
 			else if (action.equals("upstream")) {
+				if(FCM_PROJECT_SENDER_ID == null) {
+					callbackContext.error("FCM Sender Id is null, please set it first using setSenderId()");
+				}
 				Log.d(TAG, "Sending upstream message ...");
 				cordova.getThreadPool().execute(new Runnable() {
 					public void run() {
