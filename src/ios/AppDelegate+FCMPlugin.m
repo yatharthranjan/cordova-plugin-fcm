@@ -100,6 +100,13 @@ NSString *const kGCMMessageIDKey = @"gcm.message_id";
     // Add observer for InstanceID token refresh callback.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenRefreshNotification:)
                                                  name:kFIRInstanceIDTokenRefreshNotification object:nil];
+
+    // Add observer for upstream messages callback.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendDataMessageSuccess:)
+                                                 name:FIRMessagingSendSuccessNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendDataMessageFailure:)
+                                                 name:FIRMessagingSendErrorNotification object:nil];  
+                                                                                            
     return YES;
 }
 
@@ -297,6 +304,16 @@ fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
     NSLog(@"Disconnected from FCM");
 }
 // [END disconnect_from_fcm]
+
+- (void)sendDataMessageFailure:(NSNotification *)notification 
+{
+    NSLog(@"Send fail"); 
+}
+
+- (void)sendDataMessageSuccess:(NSNotification *)notification 
+{
+    NSLog(@"Send success: %@", notification); 
+}
 
 +(NSData*)getLastPush
 {
