@@ -18,7 +18,8 @@ static BOOL appInForeground = YES;
 static NSString *notificationCallback = @"FCMPlugin.onNotificationReceived";
 static NSString *tokenRefreshCallback = @"FCMPlugin.onTokenRefreshReceived";
 
-static NSString *receiver = @"000000000000@gcm.googleapis.com";
+static NSString *FCM_SERVER_CONNECTION = @"@gcm.googleapis.com";
+static NSString *FCM_PROJECT_SENDER_ID;
 static long long ttl = 900;
 
 static FCMPlugin *fcmPluginInstance;
@@ -113,16 +114,29 @@ static FCMPlugin *fcmPluginInstance;
 
 -(void) upstream:(CDVInvokedUrlCommand *)command
 {
+    NSString* receiver = [NSString stringWithFormat:@"%@%@", FCM_PROJECT_SENDER_ID, FCM_SERVER_CONNECTION];
     NSDictionary* text = [command.arguments objectAtIndex:0];
     NSString* messageId = text[@"eventId"];
 
-    NSLog(@"notif: %@", text);
+    NSLog(@"Notif: %@", text);
     NSLog(@"Sending...");
 
     [[FIRMessaging messaging] sendMessage:text to:receiver withMessageID:messageId timeToLive:ttl];
     CDVPluginResult* pluginResult = nil;
     pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+-(void) setSenderId:(CDVInvokedUrlCommand *)command
+{ 
+    NSString* id = [command.arguments objectAtIndex:0];       
+    FCM_PROJECT_SENDER_ID = id;
+    
+    NSLog(@"Sender ID set!");
+    
+    CDVPluginResult* pluginResult = nil;
+    pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];  
 }
 
 -(void) appEnterBackground

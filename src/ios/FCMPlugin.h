@@ -15,6 +15,7 @@
 - (void)notifyOfMessage:(NSData*) payload;
 - (void)notifyOfTokenRefresh:(NSString*) token;
 - (void)upstream:(CDVInvokedUrlCommand*)command;
+- (void)setSenderId:(CDVInvokedUrlCommand*)command;
 - (void)appEnterBackground;
 - (void)appEnterForeground;
 
