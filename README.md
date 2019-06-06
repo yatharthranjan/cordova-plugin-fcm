@@ -58,7 +58,7 @@ FCMPlugin.getToken(function(token){
 ```
 
 #### Set Sender Id
-**Added in this fork. Only for android right now**
+**Added in this fork.**
 ```javascript
 //FCMPlugin.getToken( id,  successCallback(), errorCallback(err) );
 
@@ -73,7 +73,7 @@ FCMPlugin.getToken(function(token){
 
 
 #### Send Upstream Message
-**Added in this fork. Only for android right now**
+**Added in this fork.**
 
 ```javascript
         FCMPlugin.upstream({
